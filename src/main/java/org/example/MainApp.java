@@ -12,6 +12,8 @@ public class MainApp {
      */
     public static void main(String... args) throws Exception {
         Main main = new Main();
+        int card_num = 0;
+        String cust_name="rutu";
         main.configure().addRoutesBuilder(new MyRouteBuilder());
         main.run(args);
         System.out.println();
