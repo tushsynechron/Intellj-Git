@@ -1,0 +1,107 @@
+<definitions name="CalculatorService"
+             targetNamespace="http://example.com/calculator"
+             xmlns:tns="http://example.com/calculator"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <!-- Types section containing XSD -->
+    <types>
+        <xsd:schema targetNamespace="http://example.com/calculator">
+            <!-- Request for Add operation -->
+            <xsd:element name="AddRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Number1" type="xsd:int"/>
+                        <xsd:element name="Number2" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Response for Add operation -->
+            <xsd:element name="AddResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Result" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Request for Subtract operation -->
+            <xsd:element name="SubtractRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Number1" type="xsd:int"/>
+                        <xsd:element name="Number2" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Response for Subtract operation -->
+            <xsd:element name="SubtractResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Result" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <!-- Message Definitions -->
+    <message name="AddRequest">
+        <part name="parameters" element="tns:AddRequest"/>
+    </message>
+    <message name="AddResponse">
+        <part name="parameters" element="tns:AddResponse"/>
+    </message>
+
+    <message name="SubtractRequest">
+        <part name="parameters" element="tns:SubtractRequest"/>
+    </message>
+    <message name="SubtractResponse">
+        <part name="parameters" element="tns:SubtractResponse"/>
+    </message>
+
+    <!-- PortType (defines operations) -->
+    <portType name="CalculatorPortType">
+        <operation name="Add">
+            <input message="tns:AddRequest"/>
+            <output message="tns:AddResponse"/>
+        </operation>
+        <operation name="Subtract">
+            <input message="tns:SubtractRequest"/>
+            <output message="tns:SubtractResponse"/>
+        </operation>
+    </portType>
+
+    <!-- Binding (SOAP protocol details) -->
+    <binding name="CalculatorBinding" type="tns:CalculatorPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="Add">
+            <soap:operation soapAction="http://example.com/calculator/Add"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="Subtract">
+            <soap:operation soapAction="http://example.com/calculator/Subtract"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Service -->
+    <service name="CalculatorService">
+        <port name="CalculatorPort" binding="tns:CalculatorBinding">
+            <soap:address location="http://example.com/calculator"/>
+        </port>
+    </service>
+</definitions>
